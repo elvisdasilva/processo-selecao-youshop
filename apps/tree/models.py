@@ -22,6 +22,8 @@ class PlantedTree(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='planted_trees', blank=False, null=False)
     tree = models.ForeignKey(Tree, on_delete=models.CASCADE, related_name='planted_trees', blank=False, null=False)
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='planted_trees', blank=False, null=False)
+    location_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=False, blank=False)
+    location_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=False, blank=False)
 
     class Meta:
         verbose_name = "Planted Tree"
