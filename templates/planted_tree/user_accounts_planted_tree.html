@@ -1,12 +1,12 @@
 {% extends "partials/base.html" %}
 {% load static %}
-{% block title %}Minhas Plantações{% endblock title %}
+{% block title %}Plantações das Contas{% endblock title %}
 
-{% block pagetitle %}Minhas Plantações{% endblock pagetitle %}
+{% block pagetitle %}Plantações das Contas{% endblock pagetitle %}
 
 {% block linkpage %}{% url 'home' %}{% endblock linkpage %}{% block page %}Home{% endblock page %}
 
-{% block breadcrumb-pagetitle %}Minhas Plantações{% endblock breadcrumb-pagetitle %}
+{% block breadcrumb-pagetitle %}Plantações das Contas{% endblock breadcrumb-pagetitle %}
 
 {% block row %}
 {% if messages %}
@@ -52,7 +52,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for planted_tree in planted_tree_list %}
+                        {% for planted_tree in user_accounts_planted_tree_list %}
                             <tr>
                                 <td>{{ planted_tree.tree }}</td>
                                 <td>{{ planted_tree.age }}</td>

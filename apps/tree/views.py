@@ -24,10 +24,21 @@ class PlantTreeListApiView(ListAPIView):
 
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
-class PlantedTreeListView(ListView):
+class MyPlantedTreeListView(ListView):
     model = PlantedTree
     template_name = "planted_tree/planted_tree.html"
     context_object_name = "planted_tree_list"
+
+    def get_queryset(self):
+        user = self.request.user
+        return PlantedTree.objects.filter(user=user).order_by("-planted_at")
+
+
+@method_decorator(login_required(login_url="login"), name="dispatch")
+class UserAccountsPlantedTreeListView(ListView):
+    model = PlantedTree
+    template_name = "planted_tree/user_accounts_planted_tree.html"
+    context_object_name = "user_accounts_planted_tree_list"
 
     def get_queryset(self):
         accounts = self.request.user.extension.account.all()
