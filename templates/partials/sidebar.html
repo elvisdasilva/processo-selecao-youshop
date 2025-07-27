@@ -16,8 +16,8 @@
 				<i class="fas fa-user-circle fa-2x" style="color: #c2c7d0"></i>
 			</div>
 			<div class="info">
-				{% comment %} {% url 'profile' request.user.pk %} {% endcomment %} {% if user.is_authenticated %}
-				<a href="" class="d-block">{{ request.user.username }}</a>
+				{% if user.is_authenticated %}
+				<a href="{% url 'profile' %}" class="d-block">{{ request.user.username }}</a>
 				{% else %}
 				<a href="#" class="d-block">Guest</a>
 				{% endif %}

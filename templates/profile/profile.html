@@ -1,0 +1,88 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}Meu Perfil{% endblock title %}
+
+{% block pagetitle %}Meu Perfil{% endblock pagetitle %}
+
+{% block linkpage %}{% url 'home' %}{% endblock linkpage %}{% block page %}Home{% endblock page %}
+
+{% block breadcrumb-pagetitle %}Perfil{% endblock breadcrumb-pagetitle %}
+
+{% block row %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% else %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!-- Profile Image -->
+    <div class="row">
+        <div class="col-md-9">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                <div class="text-center">
+                    <i class="fas fa-user-circle fa-5x"></i>
+                </div>
+
+                <h3 class="profile-username text-center">{{ profile.user.username }}</h3>
+
+                <p class="text-muted text-center">{{ profile.user.first_name }}</p>
+                <div class="card-body">
+                    <form class="form-horizontal" method="post" action="{% url 'profile' %}">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="inputName" class="col-sm-2 col-form-label">Bio:</label>
+                            <div class="col-sm-10">
+                                {{ form.bio }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputName2" class="col-sm-2 col-form-label">Último login:</label>
+                            <div class="col-sm-10">
+                                <span class="form-control">{{ profile.user.last_login|date:"d/m/Y H:i:s" }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputName2" class="col-sm-2 col-form-label">Data de registro:</label>
+                            <div class="col-sm-10">
+                                <span class="form-control">{{ profile.user.date_joined|date:"d/m/Y H:i:s" }}</span>
+                            </div>
+                        </div>
+                
+
+                        <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </div>
+                        </div>
+                    </form>
+
+                </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- About Me Box -->
+            
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    
+      </div>
+{% endblock row %}
