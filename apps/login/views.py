@@ -5,10 +5,24 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from apps.tree.models import PlantedTree
+
 
 @login_required(login_url="login")
 def HomeView(request):
-    return render(request, "home/home.html")
+    user = request.user
+
+    user_tree_count = PlantedTree.objects.filter(user=user).count()
+    account_tree_count = PlantedTree.objects.filter(
+        account__in=user.extension.account.all()
+    ).count()
+
+    context = {
+        "user_tree_count": user_tree_count,
+        "account_tree_count": account_tree_count,
+    }
+
+    return render(request, "home/home.html", context=context)
 
 
 class LoginView(LoginView):
