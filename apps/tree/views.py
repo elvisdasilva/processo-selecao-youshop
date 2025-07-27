@@ -46,7 +46,6 @@ class UserAccountsPlantedTreeListView(ListView):
         accounts = self.request.user.extension.account.all()
         return (
             PlantedTree.objects.filter(account__in=accounts)
-            .exclude(user=self.request.user)
             .order_by("-planted_at")
         )
 
