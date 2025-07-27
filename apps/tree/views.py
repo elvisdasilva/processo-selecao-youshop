@@ -8,7 +8,19 @@ from django.contrib import messages
 from apps.tree.forms import PlantedTreeModelForm
 from apps.tree.models import PlantedTree
 from django.core.exceptions import PermissionDenied
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 
+from apps.tree.serializers import PlantedTreeSerializer
+
+
+class PlantTreeListApiView(ListAPIView):
+    serializer_class = PlantedTreeSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return PlantedTree.objects.filter(user=user).order_by("-planted_at")
 
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
@@ -21,6 +33,7 @@ class PlantedTreeListView(ListView):
         accounts = self.request.user.extension.account.all()
         return PlantedTree.objects.filter(account__in=accounts).order_by("-planted_at")
 
+
 @method_decorator(login_required(login_url="login"), name="dispatch")
 class PlantedTreeCreateView(CreateView):
     model = PlantedTree
@@ -30,24 +43,24 @@ class PlantedTreeCreateView(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs["user"] = self.request.user
         return kwargs
-    
+
     def form_valid(self, form):
         user_extension = self.request.user.extension
         cleaned_data = form.cleaned_data
         user_extension.plant_tree(
-            tree=cleaned_data['tree'],
-            account=cleaned_data['account'],
-            age=cleaned_data['age'],
-            latitude=cleaned_data['location_latitude'],
-            longitude=cleaned_data['location_longitude']
+            tree=cleaned_data["tree"],
+            account=cleaned_data["account"],
+            age=cleaned_data["age"],
+            latitude=cleaned_data["location_latitude"],
+            longitude=cleaned_data["location_longitude"],
         )
         messages.success(
-            self.request, f'Árvore Plantada "{cleaned_data["tree"]}" atualizada com sucesso'
+            self.request,
+            f'Árvore Plantada "{cleaned_data["tree"]}" atualizada com sucesso',
         )
         return redirect(self.success_url)
-
 
     def form_invalid(self, form):
         print(form.errors)
@@ -64,19 +77,23 @@ class PlantedTreeUpdateView(UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs["user"] = self.request.user
         return kwargs
-        
+
     def dispatch(self, request, *args, **kwargs):
         planted_tree = self.get_object()
         if planted_tree.user != request.user:
-            return HttpResponseForbidden("Você não tem permissão para editar esta plantação.")
+            return HttpResponseForbidden(
+                "Você não tem permissão para editar esta plantação."
+            )
         return super().dispatch(request, *args, **kwargs)
-    
+
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj.account not in self.request.user.extension.account.all():
-            raise PermissionDenied(self.request, "Você não tem permissão para editar esta plantação.")
+            raise PermissionDenied(
+                self.request, "Você não tem permissão para editar esta plantação."
+            )
         return obj
 
     def form_valid(self, form):
