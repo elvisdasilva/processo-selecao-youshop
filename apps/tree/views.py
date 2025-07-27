@@ -41,7 +41,7 @@ class PlantedTreeUpdateView(UpdateView):
     def form_valid(self, form):
         planted_tree = form.instance
         messages.success(
-            self.request, f'Arvore Plantada "{planted_tree}" atualizada com sucesso'
+            self.request, f'Árvore Plantada "{planted_tree}" atualizada com sucesso'
         )
         return super().form_valid(form)
 

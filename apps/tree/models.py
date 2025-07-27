@@ -31,4 +31,4 @@ class PlantedTree(models.Model):
         ordering = ['-planted_at']
 
     def __str__(self):
-        return f"{self.tree.name} planted by {self.user.username} on {self.planted_at.strftime('%Y-%m-%d')}"
+        return Tree.objects.get(id=self.tree.id).name if self.tree else "Unknown Tree"
