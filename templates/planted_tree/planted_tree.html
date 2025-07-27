@@ -60,7 +60,7 @@
                                 <td>{{ planted_tree.account }}</td>
                                 <td>{{ planted_tree.location_latitude }}</td>
                                 <td>{{ planted_tree.location_longitude }}</td>
-                                <td>{{ planted_tree.planted_at }}</td>
+                                <td>{{ planted_tree.planted_at|date:"d/m/Y H:i:s" }}</td>
                                 <td>
                                     {% if planted_tree.user == request.user %}
                                     <a href="{% url 'planted_tree_update' planted_tree.pk %}">

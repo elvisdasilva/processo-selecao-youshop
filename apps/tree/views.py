@@ -1,4 +1,5 @@
 from django.http import HttpResponseForbidden
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -33,11 +34,23 @@ class PlantedTreeCreateView(CreateView):
         return kwargs
     
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        messages.success(self.request, "Árvore plantada com sucesso")
-        return super().form_valid(form)
+        user_extension = self.request.user.extension
+        cleaned_data = form.cleaned_data
+        user_extension.plant_tree(
+            tree=cleaned_data['tree'],
+            account=cleaned_data['account'],
+            age=cleaned_data['age'],
+            latitude=cleaned_data['location_latitude'],
+            longitude=cleaned_data['location_longitude']
+        )
+        messages.success(
+            self.request, f'Árvore Plantada "{cleaned_data["tree"]}" atualizada com sucesso'
+        )
+        return redirect(self.success_url)
+
 
     def form_invalid(self, form):
+        print(form.errors)
         messages.error(self.request, "Erro ao plantar árvore.")
         return super().form_invalid(form)
 
