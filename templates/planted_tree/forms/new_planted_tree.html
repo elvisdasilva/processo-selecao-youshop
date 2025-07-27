@@ -1,77 +1,74 @@
 {% extends 'partials/base.html' %}
 {% load static %}
 
-{% block title %}Plantar Árvore{% endblock title %}
-
-{% block pagetitle %}Plantar Árvore{% endblock pagetitle %}
+{% block title %}Plantar Múltiplas Árvores{% endblock title %}
+{% block pagetitle %}Plantar Múltiplas Árvores{% endblock pagetitle %}
 
 {% block linkpage %}{% url 'home' %}{% endblock linkpage %}{% block page %}Home{% endblock page %}
-{% block breadcrumb-pagetitle %}Plantar Árvore{% endblock breadcrumb-pagetitle %}
+{% block breadcrumb-pagetitle %}Plantar Múltiplas Árvores{% endblock breadcrumb-pagetitle %}
 
 {% block row %}
-    <div class="row">
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+<div class="row">
         <div class="col-md-6">
-            <div class="card card-primary card-outline">
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form class="form-horizontal" method="post" id="formBrand">
-                    {% csrf_token %}
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-md-2 col-form-label">Árvore<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-sm-9 col-md-10">
-                                {{ form.tree }}
-                            </div>
+            <div id="formset-container">
+                {% for form in formset %}
+                    <div class="card card-primary card-outline formset-form mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Árvore {{ forloop.counter }}</h5>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-md-2 col-form-label">Idade<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-sm-9 col-md-10">
-                                {{ form.age }}
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-2 col-form-label">Árvore<span
+                                            class="text-danger">*</span></label>
+                                <div class="col-sm-9 col-md-10">
+                                    {{ form.tree }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-md-2 col-form-label">Latitude<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-sm-9 col-md-10">
-                                {{ form.location_latitude }}
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-2 col-form-label">Idade<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-9 col-md-10">
+                                    {{ form.age }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-md-2 col-form-label">Longitude<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-sm-9 col-md-10">
-                                {{ form.location_longitude }}
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-2 col-form-label">Latitude<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-9 col-md-10">
+                                    {{ form.location_latitude }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-md-2 col-form-label">Conta<span
-                                    class="text-danger">*</span></label>
-                            <div class="col-sm-9 col-md-10">
-                                {{ form.account }}
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-2 col-form-label">Longitude<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-9 col-md-10">
+                                    {{ form.location_longitude }}
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-sm-9 offset-sm-3">
-                                <button type="submit" class="btn btn-primary">Plantar</button>
-                                <a href="{% url 'planted_tree_list' %}" class="btn btn-secondary">Cancelar</a>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-2 col-form-label">Conta<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-9 col-md-10">
+                                    {{ form.account }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-footer -->
-                </form>
+                {% endfor %}
             </div>
-            <!-- /.card -->
         </div>
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
-{% endblock row %}
 
+    <div class="mb-4">
+        <button type="button" class="btn btn-outline-primary" id="add-form">+ Adicionar Árvore</button>
+        <button type="submit" class="btn btn-primary">Plantar Todas</button>
+        <a href="{% url 'planted_tree_list' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
 {% block scripts %}
     <script type="module" src="{% static 'js/modules/planted_tree/planted_tree.js' %}"></script>
 {% endblock scripts %}

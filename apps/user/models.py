@@ -22,9 +22,15 @@ class UserExtension(models.Model):
         )
         return planted_tree
     
-    def plant_trees(self, trees, account, age, latitude, longitude):
+    def plant_trees(self, tree_data_list):
         planted_trees = []
-        for tree in trees:
-            planted_tree = self.plant_tree(tree, account, age, latitude, longitude)
+        for tree in tree_data_list:
+            planted_tree = self.plant_tree(
+                tree=tree["tree"],
+                account=tree["account"],
+                age=tree["age"],
+                latitude=tree["latitude"],
+                longitude=tree["longitude"],
+            )
             planted_trees.append(planted_tree)
         return planted_trees
