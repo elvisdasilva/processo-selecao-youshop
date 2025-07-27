@@ -15,7 +15,7 @@ def HomeView(request):
     user_tree_count = PlantedTree.objects.filter(user=user).count()
     account_tree_count = PlantedTree.objects.filter(
         account__in=user.extension.account.all()
-    ).count()
+    ).exclude(user=user).count()
 
     context = {
         "user_tree_count": user_tree_count,
