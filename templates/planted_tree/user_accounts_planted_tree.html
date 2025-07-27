@@ -48,7 +48,6 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Plantado em</th>
-                            <th>Ações</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,13 +60,6 @@
                                 <td>{{ planted_tree.location_latitude }}</td>
                                 <td>{{ planted_tree.location_longitude }}</td>
                                 <td>{{ planted_tree.planted_at|date:"d/m/Y H:i:s" }}</td>
-                                <td>
-                                    {% if planted_tree.user == request.user %}
-                                    <a href="{% url 'planted_tree_update' planted_tree.pk %}">
-                                        <button class="btn btn-success btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></button>
-                                    </a>
-                                    {% endif %}
-                                </td>
                             </tr>
                         {% endfor %}
 
