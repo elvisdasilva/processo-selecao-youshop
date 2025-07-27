@@ -1,0 +1,45 @@
+{% extends "partials/base.html" %}
+
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block pagetitle %}Home{% endblock pagetitle %}
+
+{% block linkpage %}{% url 'home' %}{% endblock linkpage %}{% block page %}Home{% endblock page %}
+
+{% block breadcrumb-pagetitle %}Home{% endblock breadcrumb-pagetitle %}
+
+
+{% block row %}
+<div class="row">
+	<div class="col-lg-6 col-6">
+		<!-- small box -->
+		<div class="small-box bg-info" style="min-height: 100px;">
+			<div class="inner">
+				<h3>23</h3>
+
+				<p>Minhas plantações</p>
+			</div>
+			<div class="icon">
+				<i class="fas fa-seedling"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6 col-6">
+		<!-- small box -->
+		<div class="small-box bg-success" style="min-height: 100px;">
+			<div class="inner">
+				<h3>12</h3>
+
+				<p>Plantações das minhas contas</p>
+			</div>
+			<div class="icon">
+				<i class="fas fa-tree"></i>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.row -->
+{% endblock row %}
