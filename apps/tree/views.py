@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -5,6 +6,8 @@ from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib import messages
 from apps.tree.forms import PlantedTreeModelForm
 from apps.tree.models import PlantedTree
+from django.core.exceptions import PermissionDenied
+
 
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
@@ -13,6 +16,9 @@ class PlantedTreeListView(ListView):
     template_name = "planted_tree/planted_tree.html"
     context_object_name = "planted_tree_list"
 
+    def get_queryset(self):
+        accounts = self.request.user.extension.account.all()
+        return PlantedTree.objects.filter(account__in=accounts).order_by("-planted_at")
 
 @method_decorator(login_required(login_url="login"), name="dispatch")
 class PlantedTreeCreateView(CreateView):
@@ -21,6 +27,11 @@ class PlantedTreeCreateView(CreateView):
     form_class = PlantedTreeModelForm
     success_url = reverse_lazy("planted_tree_list")
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Árvore plantada com sucesso")
@@ -38,7 +49,25 @@ class PlantedTreeUpdateView(UpdateView):
     form_class = PlantedTreeModelForm
     success_url = reverse_lazy("planted_tree_list")
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+        
+    def dispatch(self, request, *args, **kwargs):
+        planted_tree = self.get_object()
+        if planted_tree.user != request.user:
+            return HttpResponseForbidden("Você não tem permissão para editar esta plantação.")
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.account not in self.request.user.extension.account.all():
+            raise PermissionDenied(self.request, "Você não tem permissão para editar esta plantação.")
+        return obj
+
     def form_valid(self, form):
+        form.instance.user = self.request.user
         planted_tree = form.instance
         messages.success(
             self.request, f'Árvore Plantada "{planted_tree}" atualizada com sucesso'

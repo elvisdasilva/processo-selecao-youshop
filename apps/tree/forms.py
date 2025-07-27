@@ -5,7 +5,11 @@ from apps.tree.models import PlantedTree
 
 class PlantedTreeModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+
+        if user is not None:
+            self.fields['account'].queryset = user.extension.account.all()
 
     class Meta:
         model = PlantedTree
