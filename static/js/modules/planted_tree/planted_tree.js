@@ -20,6 +20,10 @@ $(document).ready(function () {
 		width: "100%",
 	});
 
+	$(".location_latitude, .location_longitude").mask("0000.000000", {
+		reverse: true,
+	});
+
 	$("#add-form").click(function () {
 		const totalForms = $("#id_form-TOTAL_FORMS");
 		const formCount = parseInt(totalForms.val());
@@ -64,6 +68,10 @@ $(document).ready(function () {
 				$(this).removeAttr("data-select2-id");
 				$(this).val("").change();
 			}
+		});
+
+		$newForm.find(".location_latitude, .location_longitude").mask("0000.000000", {
+			reverse: true,
 		});
 
 		$newForm.find("select.tree").select2({

@@ -16,8 +16,8 @@ class PlantedTreeModelForm(forms.ModelForm):
         exclude = ['user', 'planted_at']
         widgets = {
             "age": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Idade da árvore"}),
-            "location_latitude": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Latitude"}),
-            "location_longitude": forms.NumberInput(attrs={"class": "form-control", "placeholder": "Longitude"}),
+            "location_latitude": forms.NumberInput(attrs={"class": "form-control location_latitude", "placeholder": "Ex: -23.55052"}),
+            "location_longitude": forms.NumberInput(attrs={"class": "form-control location_longitude", "placeholder": "Ex: -46.633308"}),
             "tree": forms.Select(attrs={"class": "form-control select2bs4 tree"}),
             "account": forms.Select(attrs={"class": "form-control select2bs4 account"}),
         }
