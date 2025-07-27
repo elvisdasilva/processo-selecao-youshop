@@ -5,10 +5,11 @@ from apps.tree.models import PlantedTree, Tree
 
 class PlantedTreeInline(admin.TabularInline):
     model = PlantedTree
-    extra = 1
-    readonly_fields = ("age", "user", "account")
-    fields = ("age", "user",)
+    extra = 0
+    readonly_fields = ("age", "user", "account", "location_latitude", "location_longitude")
+    fields = ("age", "user", "location_latitude", "location_longitude")
     can_delete = False
+    max_num = 0
 
 
 @admin.register(Tree)
