@@ -8,12 +8,6 @@
         <li class="nav-item d-none d-lg-inline-block">
             <a href="{% url 'home' %}" class="nav-link">Home</a>
         </li>
-        {% comment %} <li class="nav-item d-none d-lg-inline-block">
-            <a href="#" class="nav-link">Ver site</a>
-        </li> {% endcomment %}
-        {% comment %} <li class="nav-item d-none d-lg-inline-block">
-            <a href="#" class="nav-link">Grupos</a>
-        </li> {% endcomment %}
     </ul>
 
 
@@ -33,7 +27,7 @@
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Encerrar sessão
+                            <i class="fas fa-door-open mr-2"></i> Encerrar sessão
                         </button>
                     </form>
                 {% else %}
