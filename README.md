@@ -87,6 +87,98 @@ python manage.py runserver
 - API: http://localhost:8000/api/planted-tree/
 
 
+## 📬 Utilizando a API com Postman
+
+A API da aplicação utiliza autenticação JWT para proteger os endpoints. Abaixo estão os passos para autenticar e fazer requisições via Postman:
+
+### 🔐 1. Obter o Token de Acesso
+
+Faça uma requisição `POST` para o endpoint de autenticação:
+
+**Endpoint:**  
+```
+api/v1/authentication/token/
+```
+
+**Corpo da requisição (JSON):**
+```json
+{
+  "username": "seu_usuario",
+  "password": "sua_senha"
+}
+```
+
+**Resposta esperada**
+```json
+{
+  "access": "seu_token_de_acesso",
+  "refresh": "seu_token_de_refresh"
+}
+```
+
+### 🚪 2. Acessar Endpoints Autenticados
+Com o token access, você pode acessar os endpoints protegidos. Basta adicionar o seguinte cabeçalho nas suas requisições:
+```Headers
+Authorization: Bearer seu_token_de_acesso
+```
+
+### 🌱 3. Exemplo: Listar Árvores Plantadas pelo Usuário Logado
+
+Faça uma requisição `GET` para o endpoint de listagem:
+
+**Endpoint:**
+```
+api/planted-tree/
+```
+
+**Resposta esperada**
+```json
+[
+    {
+        "id": 3,
+        "age": 224,
+        "planted_at": "2025-07-27T11:45:39.186635-03:00",
+        "location_latitude": "-00.000000",
+        "location_longitude": "-00.000000",
+        "user": 3,
+        "tree": 1,
+        "account": 2
+    },
+    {
+        "id": 2,
+        "age": 223,
+        "planted_at": "2025-07-27T11:41:38.422222-03:00",
+        "location_latitude": "-00.000000",
+        "location_longitude": "-00.000000",
+        "user": 3,
+        "tree": 1,
+        "account": 1
+    }
+]
+```
+
+### 🔁 4. Refresh do Token (Opcional)
+Quando o token access expirar, use o token refresh para obter um novo. Faça uma requisição `GET` para o endpoint de refresh:
+
+**Endpoint:**
+```
+api/v1/authentication/token/refresh/
+```
+**Corpo da requisição (JSON):**
+```json
+{
+  "refresh": "seu_token_de_refresh"
+}
+```
+
+**Resposta esperada**
+```json
+{
+  "access": "novo_token_de_acesso"
+}
+```
+
+
 ## Obrigado!
 Se encontrar problemas ou tiver sugestões de melhorias, sinta-se à vontade para enviar pull requests. Agradeço pela sua contribuição!
 
