@@ -74,6 +74,26 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+> ℹ️ **Observação:**  
+> Ao tentar fazer login no template de login com o usuário `admin` (usuário criado via `createsuperuser`), ocorrerá o seguinte erro:  
+> 
+> `User has no extension.`  
+> 
+> Isso acontece porque o usuário `admin` não possui uma instância de `UserExtension` associada.  
+> Para evitar o erro, crie manualmente a extensão para esse usuário com o comando:
+>
+> ```bash
+> python manage.py shell
+> ```
+> ```python
+> from django.contrib.auth.models import User
+> from apps.user.models import UserExtension
+>
+> admin = User.objects.get(username="admin")
+> UserExtension.objects.create(user=admin)
+> ```
+
+
 ## Executando o projeto
 Após obter sucesso em toda a instalação, é hora de rodar o projeto.
 ```bash
