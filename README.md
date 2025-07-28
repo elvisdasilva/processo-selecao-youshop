@@ -37,46 +37,46 @@ Este repositório contém o código-fonte do Trees Everywhere, que foi desenvolv
 ## Instalação
 
 **Clone o repositório**
-```
+```bash
 git clone https://github.com/elvisdasilva/processo-selecao-youshop.git
 ```
 
 **Acesse o diretório**
-```
+```bash
 cd processo-selecao-youshop
 ```
 
 **Crie um ambiente virtual e ative**
-```
+```bash
 python -m venv venv
 ```
 **Windows**
-```
+```bash
 .\venv\Scripts\activate
 ```
 **Linux**
-```
+```bash
 source venv/bin/activate
 ```
 **Instale as dependências do projeto**
-```
+```bash
 pip install -r requirements.txt
 ```
 
 ## Conexão com o banco de dados e execução de migrations
 **Execute as migrations**
-```
+```bash
 python manage.py migrate
 ```
 
 ## Criando usuário Admin
-```
+```bash
 python manage.py createsuperuser
 ```
 
 ## Executando o projeto
 Após obter sucesso em toda a instalação, é hora de rodar o projeto.
-```
+```bash
 python manage.py runserver
 ```
 
@@ -178,6 +178,13 @@ api/v1/authentication/token/refresh/
 }
 ```
 
+## 🧪 5. Testes
+
+Para executar os testes, acesse a pasta apps e utilize o seguinte comando:
+
+```bash
+python manage.py test
+```
 
 ## Obrigado!
 Se encontrar problemas ou tiver sugestões de melhorias, sinta-se à vontade para enviar pull requests. Agradeço pela sua contribuição!
