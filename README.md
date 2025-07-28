@@ -91,7 +91,7 @@ python manage.py runserver
 
 A API da aplicação utiliza autenticação JWT para proteger os endpoints. Abaixo estão os passos para autenticar e fazer requisições via Postman:
 
-### 🔐 1. Obter o Token de Acesso
+## 🔐 1. Obter o Token de Acesso
 
 Faça uma requisição `POST` para o endpoint de autenticação:
 
@@ -116,13 +116,13 @@ api/v1/authentication/token/
 }
 ```
 
-### 🚪 2. Acessar Endpoints Autenticados
+## 🚪 2. Acessar Endpoints Autenticados
 Com o token access, você pode acessar os endpoints protegidos. Basta adicionar o seguinte cabeçalho nas suas requisições:
 ```Headers
 Authorization: Bearer seu_token_de_acesso
 ```
 
-### 🌱 3. Exemplo: Listar Árvores Plantadas pelo Usuário Logado
+## 🌱 3. Exemplo: Listar Árvores Plantadas pelo Usuário Logado
 
 Faça uma requisição `GET` para o endpoint de listagem:
 
@@ -157,7 +157,8 @@ api/planted-tree/
 ]
 ```
 
-### 🔁 4. Refresh do Token (Opcional)
+## 🔁 4. Refresh do Token (Opcional)
+
 Quando o token access expirar, use o token refresh para obter um novo. Faça uma requisição `GET` para o endpoint de refresh:
 
 **Endpoint:**
