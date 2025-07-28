@@ -181,6 +181,23 @@ api/v1/authentication/token/refresh/
 
 ## 🧪 5. Testes
 
+Criar um cenário de teste com duas contas, três usuários distribuídos pelas duas contas e
+algumas árvores plantadas por cada um. Este cenário será utilizado nos testes abaixo:
+
+- ✅ Criar um teste de template que mostre que a listagem de árvores plantadas por um usuário
+  específico está sendo renderizada corretamente.
+
+- 🚫 Criar um teste de template que mostre que ao tentar acessar as árvores plantadas por outro
+  usuário é retornado um erro 403 (Forbidden).
+
+- 🔁 Criar um teste de template que mostre que a listagem de árvores plantadas pelos usuários das
+  contas das quais o usuário é membro está sendo renderizada corretamente.
+
+- 🌱 Criar testes unitários para os métodos `User.plant_tree()` e `User.plant_trees` que
+  demonstrem que, ao serem chamados, os respectivos objetos `PlantedTree` são criados e
+  associados ao usuário.
+
+
 Para executar os testes, acesse a pasta apps e utilize o seguinte comando:
 
 ```bash
