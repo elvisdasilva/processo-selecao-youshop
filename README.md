@@ -38,7 +38,7 @@ Este repositório contém o código-fonte do Trees Everywhere, que foi desenvolv
 
 **Clone o repositório**
 ```bash
-git clone https://github.com/elvisdasilva/processo-selecao-youshop.git
+git clone https://github.com/elvisdasilva/processo-seletivo-youshop.git
 ```
 
 **Acesse o diretório**
