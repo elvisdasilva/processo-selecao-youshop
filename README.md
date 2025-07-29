@@ -43,7 +43,7 @@ git clone https://github.com/elvisdasilva/processo-seletivo-youshop.git
 
 **Acesse o diretório**
 ```bash
-cd processo-selecao-youshop
+cd processo-seletivo-youshop
 ```
 
 **Crie um ambiente virtual e ative**
